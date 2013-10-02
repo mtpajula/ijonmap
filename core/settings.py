@@ -1,9 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
+
 class Settings(object):
     
     def __init__(self):
+        
+        self.project_folder = os.getcwd()
         
         self.controller = {
                         "test" : "setting"
@@ -11,7 +15,7 @@ class Settings(object):
         
         self.files = {
                         "current_filetype" : "json",
-                        "folder" : "/home/leevi/Dropbox/Koodi/apps/ijonmap/testdata/",
+                        "folder" : self.project_folder + "/testdata/",
                         "filename" : "test.json"
                     }
                     
