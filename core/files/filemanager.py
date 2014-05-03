@@ -18,7 +18,7 @@ class Filemanager(object):
     
     def load(self):
         if self.settings.files["current_filetype"] in self.filetypes:
-            self.filetypes[self.settings.files["current_filetype"]].load(self.settings, self.projects)
+            self.filetypes[self.settings.files["current_filetype"]].load(self.settings, self.projects.new_project())
         
     def save(self):
         if self.settings.files["current_filetype"] in self.filetypes:

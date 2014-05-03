@@ -20,12 +20,16 @@ class Element(object):
         d = {
                     'id' : self.id,
                     'type' : self.type,
-                    'code' : None,
+                    'code' : self.code,
                     'table_id' : self.table_id
                     }
-                    
-        if self.code is not None:
-            d['code'] = self.code.get_dictionary()
-                    
         return d
+        
+    def set_dictionary(self, d):
+        self.id = d['id']
+        self.type = d['type']
+        self.code = d['code']
+        self.table_id = d['table_id']
+        
+        
 

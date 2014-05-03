@@ -10,10 +10,17 @@ class mJson(object):
         self.title = "custom json filetype"
         self.filetype = '.json'
     
-    def load(self, settings, projects):
+    def load(self, settings, project):
         m = self.messages.add("load", "mJson")
         
         try:
+            
+            with open(settings.get_filepath()) as outfile:
+                d = json.load(outfile)
+                
+            settings.load_from_file(d['settings'])
+            project.elements.set_dictionary(d['elements'])
+            
             self.messages.set_message_status(m, True)
             return m
         except Exception, e:
@@ -25,7 +32,7 @@ class mJson(object):
         
         try:
             d = {
-                'settings' : settings.__dict__,
+                'settings' : settings.save_to_file(),
                 'elements' : project.elements.get_dictionary()
                 }
             print json.dumps(d, sort_keys=True, indent=4, separators=(',', ': '))

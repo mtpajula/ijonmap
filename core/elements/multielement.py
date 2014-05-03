@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from element import Element
+from point import Point
 
 class MultiElement(Element):
     
@@ -39,6 +40,14 @@ class MultiElement(Element):
             d['points'].append(point.get_dictionary())
         
         return d
+        
+    def set_dictionary(self, d):
+        Element.set_dictionary(self, d)
+        for data in d['points']:
+            p = Point()
+            p.set_dictionary(data)
+            self.add(p)
+            
 
 
 

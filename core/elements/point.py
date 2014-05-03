@@ -58,3 +58,11 @@ class Point(Element):
         d['y'] = self.y
         d['z'] = self.z
         return d
+        
+    def set_dictionary(self, d):
+        Element.set_dictionary(self, d)
+        self.x = d['x']
+        self.y = d['y']
+        self.z = d['z']
+        
+        

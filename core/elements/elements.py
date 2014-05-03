@@ -52,3 +52,19 @@ class Elements(object):
         
         return d
         
+    def set_dictionary(self, d):
+        
+        for data in d['points']:
+            p = self.new_point()
+            p.set_dictionary(data)
+            self.save(p)
+        for data in d['lines']:
+            l = self.new_line()
+            l.set_dictionary(data)
+            self.save(l)
+        for data in d['polygons']:
+            pl = self.new_polygon()
+            pl.set_dictionary(data)
+            self.save(pl)
+        
+        

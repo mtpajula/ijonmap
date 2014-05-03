@@ -9,7 +9,7 @@ class Settings(object):
         
         self.project_folder = os.getcwd()
         
-        self.controller = {
+        self.d = {
                         "test" : "setting"
                     }
         
@@ -20,7 +20,7 @@ class Settings(object):
                     }
                     
     def get_all(self):
-        d = dict(self.files.items() + self.controller.items())
+        d = dict(self.files.items() + self.d.items())
         return d
         
     def get(self, title):
@@ -29,3 +29,9 @@ class Settings(object):
         
     def get_filepath(self):
         return self.files["folder"] + self.files["filename"]
+        
+    def save_to_file(self):
+        return self.d
+        
+    def load_from_file(self, d):
+        self.d = d
