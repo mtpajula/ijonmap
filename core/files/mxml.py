@@ -10,7 +10,7 @@ class mXML(object):
         
         self.messages = messages
         self.title = "custom xml filetype"
-        self.filetype = '.xml'
+        self.file_extension = '.xml'
     
     def load(self, settings, projects):
         m = self.messages.add("load", "mXML")
@@ -32,7 +32,8 @@ class mXML(object):
             return m
         
     def save(self, settings, project):
-        m = self.messages.add("save", "mXML")
+        m = self.messages.add("load", "mXML")
+        
         '''
         # Generate DOM
         doc = self.generate()

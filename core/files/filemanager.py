@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from mxml import mXML
 from mjson import mJson
+import os
 
 class Filemanager(object):
     
@@ -15,12 +16,44 @@ class Filemanager(object):
                     "mxml" : mXML(self.messages),
                     "json" : mJson(self.messages)
                     }
+                    
+    def current_filetype(self):
+        return self.filetypes[self.settings.get("current_filetype")]
     
-    def load(self):
-        if self.settings.files["current_filetype"] in self.filetypes:
-            self.filetypes[self.settings.files["current_filetype"]].load(self.settings, self.projects.new_project())
+    def load(self, filepath):
+        m = self.messages.add("load", "Filemanager")
+        
+        filename, file_extension = os.path.splitext(filepath)
+        
+        current_filetype_found = False
+        for filetype in self.filetypes:
+            if file_extension == self.filetypes[filetype].file_extension:
+                self.settings.set("current_filetype", filetype)
+                current_filetype_found = True
+                break
+                
+        if not current_filetype_found:
+            self.messages.set_message_status(m, False, "unknown filetype")
+            return m
+        
+        self.messages.add("Filetype set to " + self.current_filetype().title, "Filemanager")
+        project = self.projects.new_project()
+        project.filepath = filepath
+        
+        return self.current_filetype().load(self.settings, project)
         
     def save(self):
-        if self.settings.files["current_filetype"] in self.filetypes:
-            self.filetypes[self.settings.files["current_filetype"]].save(self.settings, self.projects.current)
+        m = self.messages.add("save", "Filemanager")
         
+        if self.projects.current.filepath is None:
+            self.messages.set_message_status(m, False, "Filepath missing")
+            return m
+        
+        filename, file_extension = os.path.splitext(self.projects.current.filepath)
+        self.projects.current.filepath = filename + self.current_filetype().file_extension
+        
+        self.messages.add("Saving file to: " + self.projects.current.filepath, "Filemanager")
+        
+        return self.current_filetype().save(self.settings, self.projects.current)
+
+

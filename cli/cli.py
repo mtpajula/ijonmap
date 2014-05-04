@@ -23,7 +23,7 @@ class Cli_Main(Cli_Template):
             
     def print_settings(self):
         print "\n == Asetukset ==> "
-        for s in self.controller.settings.get_all():
+        for s in self.controller.settings.get_dictionary():
             w = " " * (30 - len(s))
             print " > " + s + ":" + w + str(self.controller.settings.get(s))
     

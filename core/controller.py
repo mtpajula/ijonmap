@@ -4,7 +4,6 @@ from settings import Settings
 from messages import Messages
 from projects import Projects
 from users.users import Users
-#from elements.elements import Elements
 from files.filemanager import Filemanager
 
 

@@ -8,6 +8,7 @@ class Project(object):
     def __init__(self):
         
         self.title = None
+        self.filepath = None
         self.users = []
         
         self.elements = Elements()

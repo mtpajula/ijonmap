@@ -17,15 +17,15 @@ class Cli_Files(Cli_Template):
         self.commands["valitse"] = self.select_filetype
             
     def save(self):
-        print "save"
         self.controller.filemanager.save()
         
     def load(self):
-        print "load"
-        self.controller.filemanager.load()
+        filepath = self.controller.settings.get_default_folder() + "test" + self.controller.filemanager.current_filetype().file_extension
+        print "filepath: " + filepath
+        self.controller.filemanager.load(filepath)
         
     def select_filetype(self):
-        print "tiedostomuoto nyt: " + self.controller.settings.files["current_filetype"]
+        print "tiedostomuoto nyt: " + self.controller.settings.get("current_filetype")
         print "tiedostomuodot: ",
         for filetype in self.controller.filemanager.filetypes:
             print filetype,
@@ -33,7 +33,7 @@ class Cli_Files(Cli_Template):
         while (True):
             ans = raw_input("Anna tiedostomuoto: ")
             if ans in self.controller.filemanager.filetypes:
-                self.controller.settings.files["current_filetype"] = ans
-                self.controller.settings.files["filename"] = 'test' + self.controller.filemanager.filetypes[ans].filetype
+                self.controller.settings.set("current_filetype", ans)
+                self.controller.settings.files["filename"] = 'test' + self.controller.filemanager.filetypes[ans].file_extension
                 break
             print " ! Tiedostomuotoa ei ole olemassa"

@@ -9,29 +9,38 @@ class Settings(object):
         
         self.project_folder = os.getcwd()
         
-        self.d = {
-                        "test" : "setting"
-                    }
+        self.d = self.get_default_settings()
+                
+    def get_default_settings(self):
         
-        self.files = {
-                        "current_filetype" : "json",
-                        "folder" : self.project_folder + "/testdata/",
-                        "filename" : "test.json"
-                    }
-                    
-    def get_all(self):
-        d = dict(self.files.items() + self.d.items())
+        d = {
+                "current_filetype" : "json"
+            }
         return d
         
+    def merge_settings(self, d_from):
+        for setting in d_from:
+            self.d[setting] = d_from[setting]
+            
+    def limit_settings_to_default(self):
+        d_old = self.d
+        self.d = self.get_default_settings()
+        
+        for setting in d_old:
+            if setting in self.d:
+                self.d[setting] = d_old[setting]
+        
     def get(self, title):
-        d = self.get_all()
-        return d[title]
+        return self.d[title]
         
-    def get_filepath(self):
-        return self.files["folder"] + self.files["filename"]
+    def set(self, title, value):
+        self.d[title] = value
         
-    def save_to_file(self):
+    def get_dictionary(self):
         return self.d
         
-    def load_from_file(self, d):
-        self.d = d
+    def set_dictionary(self, d):
+        self.merge_settings(d)
+        
+    def get_default_folder(self):
+        return self.project_folder + "/testdata/"
