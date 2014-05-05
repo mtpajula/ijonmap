@@ -44,3 +44,5 @@ class Settings(object):
         
     def get_default_folder(self):
         return self.project_folder + "/testdata/"
+        
+        
