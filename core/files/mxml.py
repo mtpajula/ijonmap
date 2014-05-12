@@ -12,7 +12,7 @@ class mXML(object):
         self.title = "custom xml filetype"
         self.file_extension = '.xml'
     
-    def load(self, settings, projects):
+    def load(self, m, settings, projects):
         m = self.messages.add("load", "mXML")
         
         try:
@@ -31,7 +31,7 @@ class mXML(object):
             self.messages.set_message_status(m, False, str(e))
             return m
         
-    def save(self, settings, project):
+    def save(self, m, settings, project):
         m = self.messages.add("load", "mXML")
         
         '''

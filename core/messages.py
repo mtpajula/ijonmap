@@ -132,14 +132,7 @@ class Messages(object):
         for lang in self.translations:
             if default in self.translations[lang]:
                 message.add_lang(lang, self.translations[lang][default])
-        '''
-        if self.debug:
-            print "=" * 30
-            print "action: " + str(message.action)
-            print message.str(self.lang)
-            print "=" * 30
-            print "\n"
-        '''
+                
         return message
         
     def get_current(self):

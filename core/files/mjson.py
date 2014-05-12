@@ -10,8 +10,7 @@ class mJson(object):
         self.title = "custom json filetype"
         self.file_extension = '.json'
     
-    def load(self, settings, project):
-        m = self.messages.add("load", "mJson")
+    def load(self, m, settings, project):
         
         try:
             
@@ -27,8 +26,8 @@ class mJson(object):
             self.messages.set_message_status(m, False, str(e))
             return m
         
-    def save(self, settings, project):
-        m = self.messages.add("save", "mJson")
+    def save(self, m, settings, project):
+        m = self.messages.get_current()
         
         try:
             d = {
