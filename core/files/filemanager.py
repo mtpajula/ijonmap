@@ -6,15 +6,15 @@ import os
 
 class Filemanager(object):
     
-    def __init__(self, messages, settings, projects):
+    def __init__(self, settings, projects):
         
-        self.messages = messages
+        self.messages = projects.messages
         self.settings = settings
         self.projects = projects
         
         self.filetypes = {
-                    "mxml" : mXML(self.messages),
-                    "json" : mJson(self.messages)
+                    "mxml" : mXML(),
+                    "json" : mJson()
                     }
                     
     def current_filetype(self):
@@ -22,6 +22,11 @@ class Filemanager(object):
     
     def load(self, filepath):
         m = self.messages.add("load", "Filemanager")
+        
+        for p in self.projects.p:
+            if p.filepath == filepath:
+                self.messages.set_message_status(m, False, "File is open already")
+                return m
         
         filename, file_extension = os.path.splitext(filepath)
         

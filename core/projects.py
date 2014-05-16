@@ -4,13 +4,14 @@ from project import Project
 
 class Projects(object):
     
-    def __init__(self):
+    def __init__(self, messages):
         
+        self.messages = messages
         self.p = []
         self.current = None
         
     def new_project(self):
-        new = Project()
+        new = Project(self.messages)
         self.p.append(new)
         self.current = new
         return new

@@ -6,9 +6,8 @@ from itertools import groupby
 
 class mXML(object):
     
-    def __init__(self, messages):
+    def __init__(self):
         
-        self.messages = messages
         self.title = "custom xml filetype"
         self.file_extension = '.xml'
     

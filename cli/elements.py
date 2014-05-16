@@ -16,30 +16,45 @@ class Cli_Elements(Cli_Template):
         self.commands["viiva"] = self.new_line
         self.commands["polygoni"] = self.new_polygon
         self.commands["kaikki"] = self.print_elements
+        self.commands["poista"] = self.delete_element
         
     def print_elements(self):
-        self.print_element_list(self.controller.projects.current.elements.points)
-        self.print_element_list(self.controller.projects.current.elements.lines)
-        self.print_element_list(self.controller.projects.current.elements.polygons)
+        self.print_element_list(self.controller.projects.current.points)
+        self.print_element_list(self.controller.projects.current.lines)
+        self.print_element_list(self.controller.projects.current.polygons)
             
     def print_element_list(self, elements):
         print ""
-        for e in elements:
-            print e.get_str()
+        for i, e in enumerate(elements):
+            print '[' + str(i)  + '] ' + e.get_str()
     
-    def save_element(self, element):
-        saved = self.controller.projects.current.elements.save(element)
-        if saved:
-            print element.get_str()
+    def delete_element(self):
+        print 'point, line vai polygon?'
+        t = raw_input("tyyppi: ")
+        elements = self.controller.projects.current.get(t)
+        if elements is False:
+            print " ! tyyppi ei ole kelvollinen, yritä uudelleen"
+            return self.new_single_point()
+            
+        print ''
+        print 'valitse poistettava elementti'
+        self.print_element_list(elements)
+        num = int(raw_input("numero: "))
+        if self.controller.projects.current.is_in_range(elements, num):
+            self.controller.projects.current.delete(elements[num])
         else:
-            print " ! elementin "+ element.type +" tallennus epäonnistui"
+            print " ! numeroa " + str(num) + ' ei löydy listalta'
+
+    def select_from_list(self, list):
+        for i, item in enumerate(list):
+            print 
     
     def new_point(self):
         point = self.new_single_point()
-        self.save_element(point)
+        self.controller.projects.current.save(point)
     
     def new_single_point(self):
-        point = self.controller.projects.current.elements.new_point()
+        point = self.controller.projects.current.new_point()
         point.id = raw_input(point.type + " id: ")
         x = raw_input("x: ")
         y = raw_input("y: ")
@@ -52,9 +67,9 @@ class Cli_Elements(Cli_Template):
             return self.new_single_point()
 
     def new_line(self):
-        line = self.controller.projects.current.elements.new_line()
+        line = self.controller.projects.current.new_line()
         self.new_multielement(line)
-        self.save_element(line)
+        self.controller.projects.current.save(line)
         
     def new_multielement(self, m_element):
         
@@ -73,6 +88,6 @@ class Cli_Elements(Cli_Template):
                 break
         
     def new_polygon(self):
-        polygon = self.controller.projects.current.elements.new_polygon()
+        polygon = self.controller.projects.current.new_polygon()
         self.new_multielement(polygon)
-        self.save_element(polygon)
+        self.controller.projects.current.save(polygon)

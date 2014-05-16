@@ -10,9 +10,11 @@ from files.filemanager import Filemanager
 class Controller(object):
     
     def __init__(self):
-        self.projects = Projects()
+        
         self.messages = Messages()
         self.users = Users()
         self.settings = Settings()
-        self.filemanager = Filemanager(self.messages, self.settings, self.projects)
+        self.projects = Projects(self.messages)
+        self.filemanager = Filemanager(self.settings, self.projects)
+        
         self.projects.new_project()
