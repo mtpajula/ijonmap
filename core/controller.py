@@ -1,16 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 from settings import Settings
 from messages import Messages
 from projects import Projects
 from users.users import Users
 from files.filemanager import Filemanager
-
+from units import Units
 
 class Controller(object):
     
     def __init__(self):
         
+        self.units = Units()
         self.messages = Messages()
         self.users = Users()
         self.settings = Settings()
