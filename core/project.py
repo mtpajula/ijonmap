@@ -115,6 +115,6 @@ class Project(object):
         for data in d['polygons']:
             pl = self.new_polygon()
             pl.set_dictionary(data)
-            self.get('point').append(pl)
+            self.get('polygon').append(pl)
         
         

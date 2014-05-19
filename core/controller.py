@@ -7,12 +7,14 @@ from projects import Projects
 from users.users import Users
 from files.filemanager import Filemanager
 from units import Units
+from features import Features
 
 class Controller(object):
     
     def __init__(self):
         
         self.units = Units()
+        self.features = Features()
         self.messages = Messages()
         self.users = Users()
         self.settings = Settings()
