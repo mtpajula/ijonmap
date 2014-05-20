@@ -34,6 +34,7 @@ class Filemanager(object):
         for filetype in self.filetypes:
             if file_extension == self.filetypes[filetype].file_extension:
                 self.settings.set("current_filetype", filetype)
+                self.messages.add("Filetype set to " + self.current_filetype().title, "Filemanager")
                 current_filetype_found = True
                 break
                 
@@ -41,7 +42,6 @@ class Filemanager(object):
             self.messages.set_message_status(m, False, "unknown filetype")
             return m
         
-        self.messages.add("Filetype set to " + self.current_filetype().title, "Filemanager")
         project = self.projects.new_project()
         project.filepath = filepath
         
@@ -50,16 +50,20 @@ class Filemanager(object):
     def save(self):
         m = self.messages.add("save", "Filemanager")
         
-        if self.projects.current.filepath is None:
+        if self.projects.current() is None:
+            self.messages.set_message_status(m, False, "current project missing")
+            return m
+        
+        if self.projects.current().filepath is None:
             self.messages.set_message_status(m, False, "Filepath missing")
             return m
         
-        filename, file_extension = os.path.splitext(self.projects.current.filepath)
-        self.projects.current.filepath = filename + self.current_filetype().file_extension
+        filename, file_extension = os.path.splitext(self.projects.current().filepath)
+        self.projects.current().filepath = filename + self.current_filetype().file_extension
         
-        self.messages.add("Saving file to: " + self.projects.current.filepath, "Filemanager")
+        self.messages.add("Saving file to: " + self.projects.current().filepath, "Filemanager")
         
-        return self.current_filetype().save(m, self.settings, self.projects.current)
+        return self.current_filetype().save(m, self.settings, self.projects.current())
         
     def get_filepath(self, filename, folder = None):
         if folder is None:

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from tur import Terminal_Ui_Reciever
 from template import Cli_Template
-from elements import Cli_Elements
+from projects import Cli_Projects
 from files import Cli_Files
 
 class Cli_Main(Cli_Template):
@@ -18,7 +18,7 @@ class Cli_Main(Cli_Template):
         
         self.commands["viestit"] = self.print_messages
         self.commands["asetukset"] = self.print_settings
-        self.commands["elementit"] = self.elements
+        self.commands["projektit"] = self.projects
         self.commands["tiedostot"] = self.files
             
     def print_settings(self):
@@ -31,8 +31,8 @@ class Cli_Main(Cli_Template):
         print "\n == Viestit ==> "
         self.controller.messages.ui.get('cli').print_messagelist(self.controller.messages.m)
         
-    def elements(self):
-        cli = Cli_Elements(self.controller)
+    def projects(self):
+        cli = Cli_Projects(self.controller.projects)
         cli.add_level()
         cli.start()
         

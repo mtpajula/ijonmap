@@ -13,8 +13,11 @@ class Cli_Template(object):
                     "komennot" : self.print_commands
                     }
                     
-    def add_level(self):
-        self.level += 1
+    def add_level(self, level = None):
+        if level is None:
+            self.level += 1
+        else:
+            self.level = level
         
     def start(self):
         

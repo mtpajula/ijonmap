@@ -18,7 +18,7 @@ class Cli_Files(Cli_Template):
            
     def save(self):
         
-        if self.controller.projects.current.filepath is None:
+        if self.controller.projects.current().filepath is None:
             self.save_as()
             return
         
@@ -32,7 +32,7 @@ class Cli_Files(Cli_Template):
         if ans == "":
             ans = "test"
         
-        self.controller.projects.current.filepath = self.controller.filemanager.get_filepath(ans)
+        self.controller.projects.current().filepath = self.controller.filemanager.get_filepath(ans)
         self.controller.filemanager.save()
         
     def load(self):

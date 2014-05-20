@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 from template import Cli_Template
 
-class Cli_Elements(Cli_Template):
+class Cli_Project(Cli_Template):
     
-    def __init__(self, controller):
-        super(Cli_Elements, self).__init__()
+    def __init__(self, project):
+        super(Cli_Project, self).__init__()
         
-        self.controller = controller
+        self.project = project
         
-        self.title = "Elementit"
+        self.title = "Projekti"
                 
         self.commands["takaisin"] = None
         self.commands["piste"] = self.new_point
@@ -18,10 +18,13 @@ class Cli_Elements(Cli_Template):
         self.commands["kaikki"] = self.print_elements
         self.commands["poista"] = self.delete_element
         
+    def project_name(self):
+        pass
+        
     def print_elements(self):
-        self.print_element_list(self.controller.projects.current.points)
-        self.print_element_list(self.controller.projects.current.lines)
-        self.print_element_list(self.controller.projects.current.polygons)
+        self.print_element_list(self.project.points)
+        self.print_element_list(self.project.lines)
+        self.print_element_list(self.project.polygons)
             
     def print_element_list(self, elements):
         print ""
@@ -31,7 +34,7 @@ class Cli_Elements(Cli_Template):
     def delete_element(self):
         print 'point, line vai polygon?'
         t = raw_input("tyyppi: ")
-        elements = self.controller.projects.current.get(t)
+        elements = self.project.get(t)
         if elements is False:
             print " ! tyyppi ei ole kelvollinen, yritä uudelleen"
             return self.new_single_point()
@@ -40,21 +43,21 @@ class Cli_Elements(Cli_Template):
         print 'valitse poistettava elementti'
         self.print_element_list(elements)
         num = int(raw_input("numero: "))
-        if self.controller.projects.current.is_in_range(elements, num):
-            self.controller.projects.current.delete(elements[num])
+        if self.project.is_in_range(elements, num):
+            self.project.delete(elements[num])
         else:
             print " ! numeroa " + str(num) + ' ei löydy listalta'
 
     def select_from_list(self, list):
         for i, item in enumerate(list):
-            print 
+            print ''
     
     def new_point(self):
         point = self.new_single_point()
-        self.controller.projects.current.save(point)
+        self.project.save(point)
     
     def new_single_point(self):
-        point = self.controller.projects.current.new_point()
+        point = self.project.new_point()
         point.id = raw_input(point.type + " id: ")
         x = raw_input("x: ")
         y = raw_input("y: ")
@@ -67,9 +70,9 @@ class Cli_Elements(Cli_Template):
             return self.new_single_point()
 
     def new_line(self):
-        line = self.controller.projects.current.new_line()
+        line = self.project.new_line()
         self.new_multielement(line)
-        self.controller.projects.current.save(line)
+        self.project.save(line)
         
     def new_multielement(self, m_element):
         
@@ -88,6 +91,6 @@ class Cli_Elements(Cli_Template):
                 break
         
     def new_polygon(self):
-        polygon = self.controller.projects.current.new_polygon()
+        polygon = self.project.new_polygon()
         self.new_multielement(polygon)
-        self.controller.projects.current.save(polygon)
+        self.project.save(polygon)
