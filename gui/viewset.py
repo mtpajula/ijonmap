@@ -14,7 +14,7 @@ class Ui_ViewSet(Ui_Dialog):
         
         self.lineEdit.setText(str(self.calc.center_x))
         self.lineEdit_2.setText(str(self.calc.center_y))
-        self.lineEdit_3.setText(str(self.calc.scale_factor))
+        self.lineEdit_3.setText(str(self.to_percent(self.calc.scale_factor)))
         
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), self.set)
         
@@ -22,6 +22,11 @@ class Ui_ViewSet(Ui_Dialog):
         
         self.calc.center_x = int(self.lineEdit.text())
         self.calc.center_y = int(self.lineEdit_2.text())
-        self.calc.scale_factor = float(self.lineEdit_3.text())
+        self.calc.scale_factor = float(self.to_scale(self.lineEdit_3.text()))
         
+    def to_percent(self, scale):
+        return int(scale*100)
+        
+    def to_scale(self, percent):
+        return float(percent)/100.0
         

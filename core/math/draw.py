@@ -15,65 +15,41 @@ class DrawCalculator(object):
         '''
         Scales object locations for QPainter
         '''
-        x = point.x# + self.center_x
-        y = point.y# - self.center_y
-        
-        x = self.scale_factor * x
-        y = self.scale_factor * y
+        x = self.scale_factor * point.x
+        y = self.scale_factor * point.y
         
         x = int(  + x )
         y = int(  - y )
         
         return ( x, y )
         
-        
     def get_scale_factor(self, width, height):
         '''
         Calculates scale factor
         '''
+        
+        if 'max_x' not in self.loop_data:
+            return
+        
         dx = self.loop_data['max_x'] - self.loop_data['min_x']
         dy = self.loop_data['max_y'] - self.loop_data['min_y']
-
-        dmax = dx
-        if dx < dy:
-            dmax = dy
-            
-        max_dist = dmax / 2.0
         
+        sx = width / dx
+        sy = height / dy
         
-        screen_min = height
-        if height > width:
-            screen_min = width
-            
-        screen_min = screen_min / 2.0
-        
-        self.scale_factor = screen_min / max_dist
-        
-        
-        
-        '''
-        screen_min = height
-        if height > width:
-            screen_min = width
-            
-        dx = self.loop_data['max_x'] - self.loop_data['min_x']
-        dy = self.loop_data['max_y'] - self.loop_data['min_y']
-
-        dmax = dx
-        if dx < dy:
-            dmax = dy
-        
-        print 'screen_min, dmax'
-        print screen_min , dmax
-        
-        self.scale_factor = screen_min / (dy + dx)
-        
-        '''
+        if sx > sy:
+            self.scale_factor = sy
+            return
+        self.scale_factor = sx
         
     def center_in_project(self, project):
+        
+        if project.is_empty():
+            return
+        
         d = self.loop_project(project)
-        self.center_x = int((d['max_x'] - d['min_x'])/2)
-        self.center_y = int((d['max_y'] - d['min_y'])/2)
+        self.center_x = int((d['max_x'] + d['min_x'])/2)
+        self.center_y = int((d['max_y'] + d['min_y'])/2)
         
     def loop_project(self, project):
         

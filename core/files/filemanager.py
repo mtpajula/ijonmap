@@ -63,7 +63,9 @@ class Filemanager(object):
         
         self.messages.add("Saving file to: " + self.projects.current().filepath, "Filemanager")
         
-        return self.current_filetype().save(m, self.settings, self.projects.current())
+        m = self.current_filetype().save(m, self.settings, self.projects.current())
+        self.projects.current().saved = m.success
+        return m
         
     def get_filepath(self, filename, folder = None):
         if folder is None:

@@ -19,10 +19,10 @@ class mJson(object):
             project.set_dictionary(d['project'])
             
             project.messages.set_message_status(m, True)
-            return m
         except Exception, e:
             project.messages.set_message_status(m, False, str(e))
-            return m
+        
+        return m
         
     def save(self, m, settings, project):
         
@@ -37,7 +37,7 @@ class mJson(object):
                 json.dump(d, outfile)
             
             project.messages.set_message_status(m, True)
-            return m
         except Exception, e:
             project.messages.set_message_status(m, False, str(e))
-            return m
+        
+        return m

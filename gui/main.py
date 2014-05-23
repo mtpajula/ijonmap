@@ -23,7 +23,6 @@ class Ui_Main(Ui_MainWindow):
         self.actionUusi_piste.setText('Uusi piste')
         self.toolBar.addAction(self.actionUusi_piste)
         
-        
         QtCore.QObject.connect(self.actionAseta, QtCore.SIGNAL("triggered()"), self.open_viewset_dialog)
         QtCore.QObject.connect(self.actionAvaa, QtCore.SIGNAL("triggered()"), self.open_file)
         QtCore.QObject.connect(self.actionKeskit, QtCore.SIGNAL("triggered()"), self.center_view)
@@ -32,7 +31,6 @@ class Ui_Main(Ui_MainWindow):
         self.center_view()
         
     def center_view(self):
-        #self.controller.mathmanager.draw.center_in_project(self.controller.projects.current())
         self.paint.show_all = True
         self.paint.repaint()
 
@@ -54,13 +52,13 @@ class Ui_Main(Ui_MainWindow):
         '''
         Open file-open dialog and load simulation from file
         '''
-        
         filepath = QtGui.QFileDialog.getOpenFileName(self.centralwidget, "Open", self.controller.settings.get_default_folder())
         
         if filepath:
             self.controller.filemanager.load(filepath[0])
             
         self.paint.set_project(self.controller.projects.current())
+        self.status_message()
         
     def status_message(self, message = None):
         
@@ -81,3 +79,4 @@ class Ui_Main(Ui_MainWindow):
                     message += " ok"
                 
         self.statusbar.showMessage(QtGui.QApplication.translate("MainWindow", message, None, QtGui.QApplication.UnicodeUTF8))
+        

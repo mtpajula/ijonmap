@@ -3,6 +3,7 @@
 from elements.point import Point
 from elements.line import Line
 from elements.polygon import Polygon
+import os
 
 class Project(object):
     
@@ -18,6 +19,23 @@ class Project(object):
         self.filepath = None
         self.users = []
         self.saved = True
+        
+    def get_title(self):
+        if self.title is not None:
+            return self.title
+        if self.filepath is not None:
+            filename, file_extension = os.path.splitext(self.filepath)
+            return filename + file_extension
+        return '...'
+        
+    def is_empty(self):
+        if len(self.points) > 0:
+            return False
+        if len(self.lines) > 0:
+            return False
+        if len(self.polygons) > 0:
+            return False
+        return True
         
     def get(self, element_type):
         if element_type == 'point':

@@ -2,6 +2,12 @@
 # -*- coding: utf-8 -*-
 from PySide import QtCore, QtGui
 
+class PaintPoint(object):
+    def __init__(self, x, y, title):
+        self.x = x
+        self.y = y
+        self.title = title
+
 
 class PaintWidget(QtGui.QWidget):
     '''
@@ -27,26 +33,13 @@ class PaintWidget(QtGui.QWidget):
         qp.begin(self)
         qp.setRenderHint(QtGui.QPainter.Antialiasing)
         
-        
-        
         if self.show_all is True:
             self.calc.center_in_project(self.project)
-            #d = self.calc.loop_project(self.project)
-            #qp.translate(d['min_x']+20,d['min_y']+qp.device().height()-20)
             self.calc.get_scale_factor(qp.device().width(), qp.device().height())
-            #print 'scale factor: '+str(self.calc.scale_factor)
-            #qp.scale(self.calc.scale_factor,self.calc.scale_factor)
+            # Marginal
+            self.calc.scale_factor = self.calc.scale_factor * 0.9
             
-            '''
-            print 'd'
-            self.set_center(qp)
-            self.calc.get_scale_factor(qp.device().width(), qp.device().height())
-            '''
-            
-        self.set_center(qp)
-        
-            
-        #qp.scale(self.calc.scale_factor,self.calc.scale_factor)
+        (cx,cy) = self.set_center(qp)
         
         qp.setFont(QtGui.QFont('Decorative', 10))
         
@@ -56,7 +49,6 @@ class PaintWidget(QtGui.QWidget):
         self.drawLines(qp)
         qp.setPen(QtGui.QColor(10, 100, 3))
         self.drawPolygons(qp)
-
         qp.end()
 
     def drawPoints(self, qp):
@@ -91,41 +83,21 @@ class PaintWidget(QtGui.QWidget):
             last_point = point
         
     def drawPoint(self, qp, p):
-        #( x, y ) = self.get_point_xy(p)
         ( x, y ) = self.calc.scale_point(p)
         point = QtCore.QPoint(x, y)
         size = 5
-        qp.drawText(x+15, y-15, p.id)     
+        qp.drawText(x+15, y-10, p.id)     
         qp.drawEllipse(point, size, size)
         return point
-        
-    def show_all_scale(self, qp):
-        
-        
-        self.calc.get_scale_factor(qp.device().width(), qp.device().height())
-        '''
-        s1 = (qp.device().width()/3)/float(self.calc.center_x)
-        s2 = (qp.device().height()/3)/float(self.calc.center_y)
-        
-        if s1 > s2:
-            self.calc.scale_factor = s2
-        else:
-            self.calc.scale_factor = s1
-            
-        print self.calc.scale_factor, self.calc.center_x, self.calc.center_y
-        '''
     
     def set_center(self, qp):
         
         cx = qp.device().width() / 2
         cy = qp.device().height() / 2
         
-        cx = cx - self.calc.center_x
-        cy = cy + self.calc.center_y
+        cx = cx - self.calc.center_x * self.calc.scale_factor
+        cy = cy + self.calc.center_y * self.calc.scale_factor
         
         qp.translate(cx, cy)
-
-    def get_point_xy(self, p):
-        return ( int(  + p.x ), int(  - p.y ) )
-
+        return (cx, cy)
 
