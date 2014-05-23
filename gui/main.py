@@ -14,7 +14,7 @@ class Ui_Main(Ui_MainWindow):
     def startMain(self, MainWindow):
         self.setupUi(MainWindow)
         
-        self.paint = PaintWidget(self.controller.mathmanager.draw, self.controller.projects)
+        self.paint = PaintWidget(self.controller.mathmanager.draw, self.controller.projects.current())
         
         self.horizontalLayout.addWidget(self.paint)
         
@@ -29,8 +29,10 @@ class Ui_Main(Ui_MainWindow):
         QtCore.QObject.connect(self.actionKeskit, QtCore.SIGNAL("triggered()"), self.center_view)
         QtCore.QObject.connect(self.actionLopeta, QtCore.SIGNAL("triggered()"), MainWindow.close)
         
+        self.center_view()
+        
     def center_view(self):
-        self.controller.mathmanager.draw.center_in_project(self.controller.projects.current())
+        #self.controller.mathmanager.draw.center_in_project(self.controller.projects.current())
         self.paint.show_all = True
         self.paint.repaint()
 
@@ -58,7 +60,7 @@ class Ui_Main(Ui_MainWindow):
         if filepath:
             self.controller.filemanager.load(filepath[0])
             
-        self.paint.repaint()
+        self.paint.set_project(self.controller.projects.current())
         
     def status_message(self, message = None):
         

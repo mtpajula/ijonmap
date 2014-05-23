@@ -8,12 +8,12 @@ class PaintWidget(QtGui.QWidget):
     QWidged where paint happens
     '''
     
-    def __init__(self, calc, projects):
+    def __init__(self, calc, project):
         QtGui.QWidget.__init__(self)
         self.calc = calc
-        self.projects = projects
+        self.project = project
         
-        self.show_all = True
+        self.show_all = False
         
     def set_project(self, project):
         self.project = project
@@ -27,12 +27,26 @@ class PaintWidget(QtGui.QWidget):
         qp.begin(self)
         qp.setRenderHint(QtGui.QPainter.Antialiasing)
         
-        self.set_center(qp)
+        
         
         if self.show_all is True:
-            self.show_all_scale(qp)
-        else:
-            qp.scale(self.calc.scale_factor,self.calc.scale_factor)
+            self.calc.center_in_project(self.project)
+            #d = self.calc.loop_project(self.project)
+            #qp.translate(d['min_x']+20,d['min_y']+qp.device().height()-20)
+            self.calc.get_scale_factor(qp.device().width(), qp.device().height())
+            #print 'scale factor: '+str(self.calc.scale_factor)
+            #qp.scale(self.calc.scale_factor,self.calc.scale_factor)
+            
+            '''
+            print 'd'
+            self.set_center(qp)
+            self.calc.get_scale_factor(qp.device().width(), qp.device().height())
+            '''
+            
+        self.set_center(qp)
+        
+            
+        #qp.scale(self.calc.scale_factor,self.calc.scale_factor)
         
         qp.setFont(QtGui.QFont('Decorative', 10))
         
@@ -47,17 +61,15 @@ class PaintWidget(QtGui.QWidget):
 
     def drawPoints(self, qp):
         
-        for p in self.projects.current().points:
+        for p in self.project.points:
             self.drawPoint(qp, p)
             
     def drawLines(self, qp):
-        for l in self.projects.current().lines:
-            self.drawMultiElement(qp, l)
+        for l in self.project.lines:
+            self.drawLine(qp, l)
             
     def drawPolygons(self, qp):
-        for element in self.projects.current().polygons:
-            #self.drawMultiElement(qp, l)
-            
+        for element in self.project.polygons:
             polygon = QtGui.QPolygon()
             
             for p in element.points:
@@ -66,36 +78,34 @@ class PaintWidget(QtGui.QWidget):
                 
             qp.drawPolygon(polygon)
             
-    def drawMultiElement(self, qp, element, polygon = False):
+    def drawLine(self, qp, element):
         
         last_point = None
-        first_point = None
         
         for i, p in enumerate(element.points):
             point = self.drawPoint(qp, p)
-            
-            if i == 0:
-                first_point = point
             
             if last_point:
                 qp.drawLine(last_point, point)
                 
             last_point = point
-            
-        if polygon is True:
-            qp.drawLine(last_point, first_point)
         
     def drawPoint(self, qp, p):
-        ( x, y ) = self.get_point_xy(p)
+        #( x, y ) = self.get_point_xy(p)
+        ( x, y ) = self.calc.scale_point(p)
         point = QtCore.QPoint(x, y)
         size = 5
-        qp.drawText(x-15, y-15, p.id)     
+        qp.drawText(x+15, y-15, p.id)     
         qp.drawEllipse(point, size, size)
         return point
         
     def show_all_scale(self, qp):
-        s1 = (qp.device().width()/2)/float(self.calc.center_x)
-        s2 = (qp.device().height()/2)/float(self.calc.center_y)
+        
+        
+        self.calc.get_scale_factor(qp.device().width(), qp.device().height())
+        '''
+        s1 = (qp.device().width()/3)/float(self.calc.center_x)
+        s2 = (qp.device().height()/3)/float(self.calc.center_y)
         
         if s1 > s2:
             self.calc.scale_factor = s2
@@ -103,6 +113,7 @@ class PaintWidget(QtGui.QWidget):
             self.calc.scale_factor = s1
             
         print self.calc.scale_factor, self.calc.center_x, self.calc.center_y
+        '''
     
     def set_center(self, qp):
         
