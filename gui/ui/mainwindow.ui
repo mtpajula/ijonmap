@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>651</width>
+    <height>608</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Ijonmap</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout"/>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>651</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuTiedostot">
+    <property name="title">
+     <string>Tiedostot</string>
+    </property>
+    <addaction name="actionUusi_projekti"/>
+    <addaction name="actionAvaa"/>
+    <addaction name="separator"/>
+    <addaction name="actionTallenna"/>
+    <addaction name="actionTalenna_nimell"/>
+    <addaction name="separator"/>
+    <addaction name="actionLopeta"/>
+   </widget>
+   <widget class="QMenu" name="menuMuokkaa">
+    <property name="title">
+     <string>Muokkaa</string>
+    </property>
+    <addaction name="actionASetukste"/>
+   </widget>
+   <widget class="QMenu" name="menuOhje">
+    <property name="title">
+     <string>Ohje</string>
+    </property>
+    <addaction name="actionTiedot"/>
+   </widget>
+   <widget class="QMenu" name="menuN_yt">
+    <property name="title">
+     <string>Näytä</string>
+    </property>
+    <addaction name="actionKeskit"/>
+    <addaction name="actionAseta"/>
+   </widget>
+   <addaction name="menuTiedostot"/>
+   <addaction name="menuMuokkaa"/>
+   <addaction name="menuN_yt"/>
+   <addaction name="menuOhje"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <action name="actionUusi_projekti">
+   <property name="text">
+    <string>Uusi projekti</string>
+   </property>
+  </action>
+  <action name="actionAvaa">
+   <property name="text">
+    <string>Avaa</string>
+   </property>
+  </action>
+  <action name="actionTallenna">
+   <property name="text">
+    <string>Tallenna</string>
+   </property>
+  </action>
+  <action name="actionTalenna_nimell">
+   <property name="text">
+    <string>Talenna nimellä</string>
+   </property>
+  </action>
+  <action name="actionLopeta">
+   <property name="text">
+    <string>Lopeta</string>
+   </property>
+  </action>
+  <action name="actionAsetukset">
+   <property name="text">
+    <string>Asetukset</string>
+   </property>
+  </action>
+  <action name="actionTiedot">
+   <property name="text">
+    <string>Tiedot</string>
+   </property>
+  </action>
+  <action name="actionASetukste">
+   <property name="text">
+    <string>Asetukset</string>
+   </property>
+  </action>
+  <action name="actionKeskit">
+   <property name="text">
+    <string>Keskitä</string>
+   </property>
+  </action>
+  <action name="actionAseta">
+   <property name="text">
+    <string>Aseta</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

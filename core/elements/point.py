@@ -11,7 +11,7 @@ class Point(Element):
         self.z = 0
         self.type = 'point'
         
-    def add_coordinates_revert_to_zero(self, x, y, z = 0):
+    def add_coordinates(self, x, y, z = 0):
         
         if self.is_num(x):
             self.x = float(x)
@@ -19,11 +19,6 @@ class Point(Element):
             self.y = float(y)
         if self.is_num(z):
             self.z = float(z)
-            
-    def add_coordinates(self, x, y, z = 0):
-        self.x = x
-        self.y = y
-        self.z = z
         
     def is_valid(self):
         if self.is_num(self.x) is not True:
@@ -61,8 +56,6 @@ class Point(Element):
         
     def set_dictionary(self, d):
         Element.set_dictionary(self, d)
-        self.x = d['x']
-        self.y = d['y']
-        self.z = d['z']
+        self.add_coordinates(d['x'], d['y'], d['z'])
         
         
