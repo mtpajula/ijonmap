@@ -33,6 +33,13 @@ if __name__ == "__main__":
     
     if argv1 == "gui":
         main_gui(controller)
+    elif argv1 == "read":
+        from cli.tur import Terminal_Ui_Reciever
+        controller.messages.ui.set(Terminal_Ui_Reciever(), 'cli')
+        controller.settings.set("current_filetype", 'txt')
+        filepath = controller.filemanager.get_filepath(sys.argv[2])
+        print "tiedosto: " + filepath
+        controller.filemanager.load(filepath)
     else:
         ui = Cli_Main(controller, sys.argv)
         ui.start()

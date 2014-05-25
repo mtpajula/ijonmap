@@ -14,6 +14,8 @@ class Controller(object):
     
     def __init__(self):
         
+        # TODO Settings to each project
+        
         self.units = Units()
         self.mathmanager = MathManager()
         self.features = Features()

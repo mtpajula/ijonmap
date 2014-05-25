@@ -103,6 +103,16 @@ class Messages(object):
             
         return message
         
+    def error(self, default = "", action = None, reason = None):
+        
+        message = self.new(default, action)
+        message.success = False
+        if reason is not None:
+            message.reason = self.new(reason, None)
+        self.add_message_object(message)
+            
+        return message
+        
     def add_message_object(self, message):
         self.m.append(message)
         

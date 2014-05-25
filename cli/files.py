@@ -36,7 +36,12 @@ class Cli_Files(Cli_Template):
         self.controller.filemanager.save()
         
     def load(self):
-        filepath = self.controller.filemanager.get_filepath("test")
+        
+        ans = raw_input("Anna tiedoston nimi: ")
+        if ans == "":
+            ans = "test"
+        
+        filepath = self.controller.filemanager.get_filepath(ans)
         print "tiedosto: " + filepath
         self.controller.filemanager.load(filepath)
         

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from mxml import mXML
 from mjson import mJson
+from mcsv import mCsv
 import os
 
 class Filemanager(object):
@@ -14,7 +15,8 @@ class Filemanager(object):
         
         self.filetypes = {
                     "mxml" : mXML(),
-                    "json" : mJson()
+                    "json" : mJson(),
+                    "csv" : mCsv()
                     }
                     
     def current_filetype(self):

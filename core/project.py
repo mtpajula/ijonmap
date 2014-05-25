@@ -46,6 +46,12 @@ class Project(object):
             return self.polygons
         else:
             return False
+            
+    def get_id(self, element_type, id):
+        for element in self.get(element_type):
+            if element.id == id:
+                return element
+        return False
         
     def new_point(self):
         return Point()
@@ -55,6 +61,16 @@ class Project(object):
         
     def new_polygon(self):
         return Polygon()
+        
+    def new(self, element_type):
+        if element_type == 'point':
+            return self.new_point()
+        elif element_type == 'line':
+            return self.new_line()
+        elif element_type == 'polygon':
+            return self.new_polygon()
+        else:
+            return False
         
     def save(self, element):
         m = self.messages.add("save " + element.type, "Project")

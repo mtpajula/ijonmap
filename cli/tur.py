@@ -5,7 +5,11 @@
 class Terminal_Ui_Reciever(object):
         
     def message_added(self, m):
-        print "   ... " + m.str() + " ..."
+        status = False
+        if m.reason is not None:
+            status = True
+
+        self.print_message(m, "", status)
     
     def message_added_to_parent(self, parent):
         if parent.action != "exec" and parent.action != "clean":

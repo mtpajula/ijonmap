@@ -11,14 +11,22 @@ class Point(Element):
         self.z = 0
         self.type = 'point'
         
-    def add_coordinates(self, x, y, z = 0):
-        
+    def add_x(self, x):
         if self.is_num(x):
             self.x = float(x)
+            
+    def add_y(self, y):
         if self.is_num(y):
             self.y = float(y)
+            
+    def add_z(self, z):
         if self.is_num(z):
             self.z = float(z)
+        
+    def add_coordinates(self, x, y, z = 0):
+        self.add_x(x)
+        self.add_y(y)
+        self.add_z(z)
         
     def is_valid(self):
         if self.is_num(self.x) is not True:
