@@ -14,7 +14,7 @@ class Ui_Main(Ui_MainWindow):
     def startMain(self, MainWindow):
         self.setupUi(MainWindow)
         
-        self.paint = PaintWidget(self.controller.mathmanager.draw, self.controller.projects.current())
+        self.paint = PaintWidget(self.controller.mathmanager.draw, self.controller.projects)
         
         self.horizontalLayout.addWidget(self.paint)
         
@@ -56,8 +56,8 @@ class Ui_Main(Ui_MainWindow):
         
         if filepath:
             self.controller.filemanager.load(filepath[0])
-            
-        self.paint.set_project(self.controller.projects.current())
+        
+        self.paint.repaint()
         self.status_message()
         
     def status_message(self, message = None):

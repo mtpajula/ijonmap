@@ -57,5 +57,16 @@ class Projects(object):
             return True
         return False
         
+    def delete_all(self):
+        for i, p in enumerate(self.p):
+            self.delete(i)
+            
+    def is_empty(self):
+        empty = True
+        for p in self.p:
+            if p.is_empty() is False:
+                empty = False
+        return empty
+        
     def get_all(self):
         return self.p

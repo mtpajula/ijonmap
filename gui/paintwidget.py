@@ -14,16 +14,12 @@ class PaintWidget(QtGui.QWidget):
     QWidged where paint happens
     '''
     
-    def __init__(self, calc, project):
+    def __init__(self, calc, projects):
         QtGui.QWidget.__init__(self)
         self.calc = calc
-        self.project = project
+        self.projects = projects
         
         self.show_all = False
-        
-    def set_project(self, project):
-        self.project = project
-        self.repaint()
         
     def paintEvent(self, event):
         '''
@@ -34,41 +30,44 @@ class PaintWidget(QtGui.QWidget):
         qp.setRenderHint(QtGui.QPainter.Antialiasing)
         
         if self.show_all is True:
-            self.calc.center_in_project(self.project)
+            self.calc.center_in_projects(self.projects)
             self.calc.get_scale_factor(qp.device().width(), qp.device().height())
             # Marginal
             self.calc.scale_factor = self.calc.scale_factor * 0.9
             
         (cx,cy) = self.set_center(qp)
         
-        qp.setFont(QtGui.QFont('Decorative', 10))
+        for project in self.projects.get_all():
+            qp.setFont(QtGui.QFont('Decorative', 10))
+            qp.setPen(QtGui.QColor(168, 34, 3))
+            self.drawPoints(qp, project)
+            qp.setPen(QtGui.QColor(5, 34, 100))
+            self.drawLines(qp, project)
+            qp.setPen(QtGui.QColor(10, 100, 3))
+            self.drawPolygons(qp, project)
         
-        qp.setPen(QtGui.QColor(168, 34, 3))
-        self.drawPoints(qp)
-        qp.setPen(QtGui.QColor(5, 34, 100))
-        self.drawLines(qp)
-        qp.setPen(QtGui.QColor(10, 100, 3))
-        self.drawPolygons(qp)
         qp.end()
 
-    def drawPoints(self, qp):
-        
-        for p in self.project.points:
+    def drawPoints(self, qp, project):
+        for p in project.points:
             self.drawPoint(qp, p)
             
-    def drawLines(self, qp):
-        for l in self.project.lines:
+    def drawLines(self, qp, project):
+        for l in project.lines:
             self.drawLine(qp, l)
             
-    def drawPolygons(self, qp):
-        for element in self.project.polygons:
-            polygon = QtGui.QPolygon()
+    def drawPolygons(self, qp, project):
+        for pl in project.polygons:
+            self.drawPolygon(qp, pl)
             
-            for p in element.points:
-                point = self.drawPoint(qp, p)
-                polygon.append(point)
-                
-            qp.drawPolygon(polygon)
+    def drawPolygon(self, qp, element):
+        polygon = QtGui.QPolygon()
+        
+        for p in element.points:
+            point = self.drawPoint(qp, p)
+            polygon.append(point)
+            
+        qp.drawPolygon(polygon)
             
     def drawLine(self, qp, element):
         
