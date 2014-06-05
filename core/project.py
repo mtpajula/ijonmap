@@ -72,8 +72,9 @@ class Project(object):
         else:
             return False
         
-    def save(self, element):
-        m = self.messages.add("save " + element.type, "Project")
+    def save(self, element, show_ok_message = True):
+        if show_ok_message: 
+            m = self.messages.add("save " + element.type, "Project")
         
         if element.is_valid() is not True:
             self.messages.set_message_status(m, False, element.type + " is not valid")
@@ -81,7 +82,9 @@ class Project(object):
         
         self.get(element.type).append(element)
         
-        self.messages.set_message_status(m, True)
+        if show_ok_message: 
+            self.messages.set_message_status(m, True)
+        
         self.saved = False
         return True
         

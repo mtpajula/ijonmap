@@ -3,6 +3,7 @@
 from mxml import mXML
 from mjson import mJson
 from mcsv import mCsv
+from mgt import mGt
 import os
 
 class Filemanager(object):
@@ -16,7 +17,8 @@ class Filemanager(object):
         self.filetypes = {
                     "mxml" : mXML(),
                     "json" : mJson(),
-                    "csv" : mCsv()
+                    "csv" : mCsv(),
+                    "gt" : mGt()
                     }
                     
     def current_filetype(self):

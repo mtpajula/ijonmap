@@ -9,13 +9,20 @@ class mCsv(object):
         self.title = "read csv files"
         self.file_extension = '.txt'
         
-        #self.columns = ['surface_id','line_id','code','id','x','y','z']
-        self.columns = ['x','y','z']
-        
+        self.default_columns = ['id','title','table_id','line_id','polygon_id','x','y','z']
+        self.columns = ['surface_id','line_id','code','id','x','y','z']
+        #self.columns = ['x','y','z']
         self.delimiter = ' '
+        
         self.line_id_column = None
         self.polygon_id_column = None
         self.elements = []
+        
+    def get_dialect(self):
+        dialect = csv.excel
+        dialect.delimiter = self.delimiter
+        dialect.skipinitialspace = True
+        return dialect
         
     def load(self, m, settings, project):
         
@@ -25,17 +32,13 @@ class mCsv(object):
             
             with open(project.filepath, 'rb') as csvfile:
                 
-                dialect = csv.excel
-                dialect.delimiter = self.delimiter
-                dialect.skipinitialspace = True
-                
-                reader = csv.reader(csvfile, dialect)
+                reader = csv.reader(csvfile, self.get_dialect())
                 
                 for row in reader:
                     self.read_row(project, row)
                 
             for e in self.elements:
-                project.save(e)
+                project.save(e, False)
             self.elements[:] = []
             
             project.messages.set_message_status(m, True)
@@ -64,6 +67,10 @@ class mCsv(object):
                         p.title = row[i]
                     elif column == 'table_id':
                         p.table_id = row[i]
+                    elif column == 'line_id':
+                        pass
+                    elif column == 'polygon_id':
+                        pass
                     else:
                         p.features[column] =  row[i]
                 
@@ -111,13 +118,23 @@ class mCsv(object):
                 self.line_id_column = i
             elif col == 'polygon_id':
                 self.polygon_id_column = i
-            
-            
         
     def save(self, m, settings, project):
                 
         try:
             
+            with open(project.filepath, 'wb') as csvfile:
+                
+                writer = csv.writer(csvfile, self.get_dialect())
+                
+                for p in project.get('point'):
+                    writer.writerow(self.build_row(p))
+                for l in project.get('line'):
+                    for p in l.points:
+                        writer.writerow(self.build_row(p, l))
+                for pl in project.get('polygon'):
+                    for p in l.points:
+                        writer.writerow(self.build_row(p, pl))
             
             
             project.messages.set_message_status(m, True)
@@ -125,3 +142,37 @@ class mCsv(object):
         except Exception, e:
             project.messages.set_message_status(m, False, str(e))
             return m
+            
+    def build_row(self, point, multielement = None):
+        
+        row = []
+        
+        for i, column in enumerate(self.columns):
+                        
+            if column in self.default_columns:
+                if column == 'line_id':
+                    row.append(self.get_multielement_id(multielement, column))
+                elif column == 'polygon_id':
+                    row.append(self.get_multielement_id(multielement, column))
+                else:
+                    row.append(getattr(point, column))
+            else:
+                if column in point.features:
+                    row.append(point.features[column])
+                else:
+                    row.append('')
+                        
+        return row
+        
+    def get_multielement_id(self, multielement, column):
+        
+        if multielement is None:
+            return 0
+            
+        if column == 'line_id' and multielement.type == 'line':
+            return multielement.id
+        
+        if column == 'polygon_id' and multielement.type == 'polygon':
+            return multielement.id
+        
+        return 0

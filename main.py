@@ -36,7 +36,7 @@ if __name__ == "__main__":
     elif argv1 == "read":
         from cli.tur import Terminal_Ui_Reciever
         controller.messages.ui.set(Terminal_Ui_Reciever(), 'cli')
-        controller.settings.set("current_filetype", 'txt')
+        controller.settings.set("current_filetype", 'gt')
         filepath = controller.filemanager.get_filepath(sys.argv[2])
         print "tiedosto: " + filepath
         controller.filemanager.load(filepath)
