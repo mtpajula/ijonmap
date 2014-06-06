@@ -47,16 +47,31 @@ class DrawCalculator(object):
         if project.is_empty():
             return
         
-        d = self.loop_project(project)
-        self.center_x = int((d['max_x'] + d['min_x'])/2)
-        self.center_y = int((d['max_y'] + d['min_y'])/2)
+        self.init_loop_data()
+        self.loop_project(project)
+        self.calc_center_from_loop_data()
+                
+    def calc_center_from_loop_data(self):
+        self.center_x = int((self.loop_data['max_x'] + self.loop_data['min_x'])/2)
+        self.center_y = int((self.loop_data['max_y'] + self.loop_data['min_y'])/2)
         
-    def loop_project(self, project):
-        
+    def center_in_projects(self, projects):
+        draw = False
+        self.init_loop_data()
+        for project in projects.get_all():
+            if project.draw and project.is_empty() is False:
+                self.loop_project(project)
+                draw = True
+        if draw:
+            self.calc_center_from_loop_data()
+            
+    def init_loop_data(self):
         self.loop_data['max_x'] = float("-inf")
         self.loop_data['max_y'] = float("-inf")
         self.loop_data['min_x'] = float("+inf")
         self.loop_data['min_y'] = float("+inf")
+        
+    def loop_project(self, project):
         
         for p in project.points:
             self.loop_point(p)

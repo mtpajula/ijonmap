@@ -19,6 +19,7 @@ class Project(object):
         self.filepath = None
         self.users = []
         self.saved = True
+        self.draw = True
         
     def get_title(self):
         if self.title is not None:
