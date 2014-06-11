@@ -5,7 +5,7 @@ class DrawCalculator(object):
     
     def __init__(self):
         
-        self.scale_factor = 1
+        self.scale_factor = 1.0
         self.center_x = 100
         self.center_y = 100
         
@@ -27,7 +27,6 @@ class DrawCalculator(object):
         '''
         Calculates scale factor
         '''
-        
         if 'max_x' not in self.loop_data:
             return
         
@@ -39,8 +38,11 @@ class DrawCalculator(object):
         
         if sx > sy:
             self.scale_factor = sy
-            return
-        self.scale_factor = sx
+        else:
+            self.scale_factor = sx
+        
+        if self.scale_factor == 0:
+            self.scale_factor = 1
         
     def center_in_project(self, project):
         
@@ -59,9 +61,10 @@ class DrawCalculator(object):
         draw = False
         self.init_loop_data()
         for project in projects.get_all():
-            if project.draw and project.is_empty() is False:
-                self.loop_project(project)
-                draw = True
+            if project.draw is True:
+                if project.is_empty() is False:
+                    self.loop_project(project)
+                    draw = True
         if draw:
             self.calc_center_from_loop_data()
             

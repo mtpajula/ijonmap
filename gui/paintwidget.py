@@ -8,7 +8,6 @@ class PaintPoint(object):
         self.y = y
         self.title = title
 
-
 class PaintWidget(QtGui.QWidget):
     '''
     QWidged where paint happens
@@ -20,6 +19,9 @@ class PaintWidget(QtGui.QWidget):
         self.projects = projects
         
         self.show_all = False
+        
+        self.cx = self.calc.center_x
+        self.cy = self.calc.center_y
         
     def paintEvent(self, event):
         '''
@@ -90,13 +92,39 @@ class PaintWidget(QtGui.QWidget):
         return point
     
     def set_center(self, qp):
-        
         cx = qp.device().width() / 2
         cy = qp.device().height() / 2
-        
+
         cx = cx - self.calc.center_x * self.calc.scale_factor
         cy = cy + self.calc.center_y * self.calc.scale_factor
-        
-        qp.translate(cx, cy)
-        return (cx, cy)
 
+        qp.translate(cx, cy)
+        
+        self.cx = cx
+        self.cy = cy
+
+        return (cx, cy)
+        
+    def mousePressEvent(self, event):
+        px = event.x() - self.width() / 2
+        py = self.height() / 2 - event.y()
+        
+        px = px / self.calc.scale_factor
+        py = py / self.calc.scale_factor
+        
+        
+        self.calc.center_x = self.calc.center_x + px
+        self.calc.center_y = self.calc.center_y + py
+        
+        self.show_all = False
+        self.repaint()
+        
+    def wheelEvent(self, event):
+        if event.delta() > 0:
+            self.calc.scale_factor = self.calc.scale_factor * 1.1
+        else:
+            self.calc.scale_factor = self.calc.scale_factor * 0.9
+            
+        self.show_all = False
+        self.repaint()
+        
