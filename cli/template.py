@@ -23,7 +23,7 @@ class Cli_Template(object):
         
         while (True):
             
-            syote = raw_input("[ " + str(self.level) + " ]: ")
+            syote = input("[ " + str(self.level) + " ]: ")
             
             if syote in self.commands:
                 
@@ -32,19 +32,19 @@ class Cli_Template(object):
                 else:
                     self.commands[syote]()
             else:
-                print "\n ! tuntematon komento"
+                print("\n ! tuntematon komento")
     
     def exit_system(self):
         sys.exit()
     
     def print_commands(self):
-        print "\n == " + self.title + ". Komennot ==> "
+        print("\n == " + self.title + ". Komennot ==> ")
         first = False
         for s in self.commands:
             if first is True:
-                print ", ",
-            print s,
+                print(", ", end=' ')
+            print(s, end=' ')
             first = True
             
-        print ""
+        print("")
         

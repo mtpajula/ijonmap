@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from template import Cli_Template
+from .template import Cli_Template
 
 class Cli_Files(Cli_Template):
     
@@ -25,10 +25,10 @@ class Cli_Files(Cli_Template):
         self.controller.filemanager.save()
     
     def save_as(self):
-        print "tallennetaan kansioon: " + self.controller.settings.get_default_folder()
-        print "Tiedostomuoto: " + self.controller.filemanager.current_filetype().title
+        print("tallennetaan kansioon: " + self.controller.settings.get_default_folder())
+        print("Tiedostomuoto: " + self.controller.filemanager.current_filetype().title)
         
-        ans = raw_input("Anna tiedoston nimi: ")
+        ans = input("Anna tiedoston nimi: ")
         if ans == "":
             ans = "test"
         
@@ -37,23 +37,23 @@ class Cli_Files(Cli_Template):
         
     def load(self):
         
-        ans = raw_input("Anna tiedoston nimi: ")
+        ans = input("Anna tiedoston nimi: ")
         if ans == "":
             ans = "test"
         
         filepath = self.controller.filemanager.get_filepath(ans)
-        print "tiedosto: " + filepath
+        print("tiedosto: " + filepath)
         self.controller.filemanager.load(filepath)
         
     def select_filetype(self):
-        print "tiedostomuoto nyt: " + self.controller.settings.get("current_filetype")
-        print "tiedostomuodot: ",
+        print("tiedostomuoto nyt: " + self.controller.settings.get("current_filetype"))
+        print("tiedostomuodot: ", end=' ')
         for filetype in self.controller.filemanager.filetypes:
-            print filetype,
-        print ""
+            print(filetype, end=' ')
+        print("")
         while (True):
-            ans = raw_input("Anna tiedostomuoto: ")
+            ans = input("Anna tiedostomuoto: ")
             if ans in self.controller.filemanager.filetypes:
                 self.controller.settings.set("current_filetype", ans)
                 break
-            print " ! Tiedostomuotoa ei ole olemassa"
+            print(" ! Tiedostomuotoa ei ole olemassa")

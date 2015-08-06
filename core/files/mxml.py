@@ -26,7 +26,7 @@ class mXML(object):
             '''
             self.messages.set_message_status(m, True)
             return m
-        except Exception, e:
+        except Exception as e:
             self.messages.set_message_status(m, False, str(e))
             return m
         
@@ -49,7 +49,7 @@ class mXML(object):
         #print etree.tostring(self.d2xml(d))
         doc = dom.parseString(etree.tostring(self.d2xml(d)))
         docString = doc.toprettyxml("    ", "\n", "utf-8")
-        print docString
+        print(docString)
         
         try:
             d = {'mxml' : {
@@ -66,7 +66,7 @@ class mXML(object):
             
             self.messages.set_message_status(m, True)
             return m
-        except Exception, e:
+        except Exception as e:
             self.messages.set_message_status(m, False, str(e))
             return m
             
@@ -121,7 +121,7 @@ class mXML(object):
         @return:  A etree Root element
         """
         def _d2xml(d, p):
-            for k,v in d.items():
+            for k,v in list(d.items()):
                 if isinstance(v,dict):
                     node = etree.SubElement(p, k)
                     _d2xml(v, node)
@@ -138,7 +138,7 @@ class mXML(object):
                         v = 'None'
                     p.set(k, v)
 
-        k,v = d.items()[0]
+        k,v = list(d.items())[0]
         node = etree.Element(k)
         _d2xml(v, node)
         return node

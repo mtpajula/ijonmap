@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from PySide import QtCore, QtGui
-from ui.viewsetdialog import Ui_Dialog
+from .ui.viewsetdialog import Ui_Dialog
 
 class Ui_ViewSet(Ui_Dialog):
     

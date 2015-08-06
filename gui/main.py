@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from ui.mainwindow import Ui_MainWindow
+from .ui.mainwindow import Ui_MainWindow
 from PySide import QtCore, QtGui
-from paintwidget import PaintWidget
-from viewset import Ui_ViewSet
+from .paintwidget import PaintWidget
+from .viewset import Ui_ViewSet
 
 class Ui_Main(Ui_MainWindow):
     

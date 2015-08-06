@@ -39,7 +39,7 @@ class mGt(object):
             
             project.messages.set_message_status(m, True)
             return m
-        except Exception, e:
+        except Exception as e:
             project.messages.set_message_status(m, False, str(e))
             return m
         
@@ -71,7 +71,7 @@ class mGt(object):
             else:
                 project.messages.error('read row', 'read_row', 'row too short Row: ' + row)
                 
-        except Exception, e:
+        except Exception as e:
             project.messages.error('read row', 'read_row', str(e) + ' Row: ' + row)
                 
     def read_cell(self, p, column, cell):
@@ -95,7 +95,7 @@ class mGt(object):
             
             project.messages.set_message_status(m, True)
             return m
-        except Exception, e:
+        except Exception as e:
             project.messages.set_message_status(m, False, str(e))
             return m
             

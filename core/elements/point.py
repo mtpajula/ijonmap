@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from element import Element
+from .element import Element
 
 class Point(Element):
     

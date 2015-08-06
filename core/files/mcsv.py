@@ -43,7 +43,7 @@ class mCsv(object):
             
             project.messages.set_message_status(m, True)
             return m
-        except Exception, e:
+        except Exception as e:
             project.messages.set_message_status(m, False, str(e))
             return m
             
@@ -80,7 +80,7 @@ class mCsv(object):
             else:
                 project.messages.error("column count is wrong", "read_row", 'row: '+str(row)+')')
             
-        except Exception, e:
+        except Exception as e:
             project.messages.error("load row", "read_row", str(e)+' (row: '+str(row)+')')
         
     def manage_multielement(self, project, row, p):
@@ -139,7 +139,7 @@ class mCsv(object):
             
             project.messages.set_message_status(m, True)
             return m
-        except Exception, e:
+        except Exception as e:
             project.messages.set_message_status(m, False, str(e))
             return m
             

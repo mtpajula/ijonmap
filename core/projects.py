@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from project import Project
+from .project import Project
 
 class Projects(object):
     
@@ -14,6 +14,8 @@ class Projects(object):
         
     def current(self):
         if self.current_index is None:
+            return None
+        if not self.is_in_range(self.current_index):
             return None
         
         return self.p[self.current_index]

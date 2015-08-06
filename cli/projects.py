@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from template import Cli_Template
-from project import Cli_Project
+from .template import Cli_Template
+from .project import Cli_Project
 
 class Cli_Projects(Cli_Template):
     
@@ -24,33 +24,33 @@ class Cli_Projects(Cli_Template):
     def project(self):
         
         if self.projects.current() is None:
-            print " ! Ei valittuna aktiivista projektia"
+            print(" ! Ei valittuna aktiivista projektia")
         
         cli = Cli_Project(self.projects.current())
         cli.add_level(2)
         cli.start()
         
     def delete(self):
-        print 'valitse projekti poistettavaksi'
+        print('valitse projekti poistettavaksi')
         self.print_projects()
-        num = int(raw_input("numero: "))
+        num = int(input("numero: "))
         self.projects.delete(num)
         
     def new(self):
         self.projects.new_project()
         
     def select_current(self):
-        print 'valitse projekti aktiiviseksi'
+        print('valitse projekti aktiiviseksi')
         self.print_projects()
-        num = int(raw_input("numero: "))
+        num = int(input("numero: "))
         self.projects.set_current(num)
         
     def print_projects(self):
-        print ''
+        print('')
         for i, p in enumerate(self.projects.get_all()):
-            print '[' + str(i)  + '] ',
+            print('[' + str(i)  + '] ', end=' ')
             self.print_project(p)
-            print ''
+            print('')
             
     def print_current(self):
         self.print_project(self.projects.current())
@@ -58,15 +58,15 @@ class Cli_Projects(Cli_Template):
     def print_project(self, p):
         
         if p is None:
-            print " ! ei projektia"
+            print(" ! ei projektia")
             return
         
-        print '=== projekti: ' + str(p.title) + ' ==='
-        print p.filepath
-        print 'pisteitä: ' + str(len(p.points))
-        print 'viivoja: ' + str(len(p.lines))
-        print 'polygoneja: ' + str(len(p.polygons))
-        print 'tallennettu: ' + str(p.saved)
-        print '========'
+        print('=== projekti: ' + str(p.title) + ' ===')
+        print(p.filepath)
+        print('pisteitä: ' + str(len(p.points)))
+        print('viivoja: ' + str(len(p.lines)))
+        print('polygoneja: ' + str(len(p.polygons)))
+        print('tallennettu: ' + str(p.saved))
+        print('========')
         
         

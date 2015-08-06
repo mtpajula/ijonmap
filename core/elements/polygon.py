@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from multielement import MultiElement
+from .multielement import MultiElement
 
 class Polygon(MultiElement):
     

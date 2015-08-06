@@ -46,7 +46,7 @@ class Terminal_Ui_Reciever(object):
         out = sw + success + m.str() + w + end
         if as_string:
             return out
-        print out
+        print(out)
         
         if mlist:
             w = " " * 20

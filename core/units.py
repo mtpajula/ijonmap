@@ -62,7 +62,7 @@ class Unit(object):
         '''
         Sets default unit to given unit
         '''
-        for unit, divider in self.unit_dict.items():
+        for unit, divider in list(self.unit_dict.items()):
             if unit == given_unit:
                 self.unit = given_unit
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from draw import DrawCalculator
+from .draw import DrawCalculator
 
 class MathManager(object):
     

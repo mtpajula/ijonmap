@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from element import Element
-from point import Point
+from .element import Element
+from .point import Point
 
 class MultiElement(Element):
     

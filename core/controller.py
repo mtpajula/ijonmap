@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from settings import Settings
-from messages import Messages
-from projects import Projects
-from users.users import Users
-from files.filemanager import Filemanager
-from math.manager import MathManager
-from units import Units
-from features import Features
+from .settings import Settings
+from .messages import Messages
+from .projects import Projects
+from .users.users import Users
+from .files.filemanager import Filemanager
+from .math.manager import MathManager
+from .units import Units
+from .features import Features
 
 class Controller(object):
     
@@ -26,3 +26,6 @@ class Controller(object):
         self.filemanager = Filemanager(self.settings, self.projects)
         
         self.projects.new_project()
+
+    def test(self):
+        return 'test'

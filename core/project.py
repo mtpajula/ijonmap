@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from elements.point import Point
-from elements.line import Line
-from elements.polygon import Polygon
+from .elements.point import Point
+from .elements.line import Line
+from .elements.polygon import Polygon
 import os
 
 class Project(object):

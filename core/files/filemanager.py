@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from mxml import mXML
-from mjson import mJson
-from mcsv import mCsv
-from mgt import mGt
+from .mxml import mXML
+from .mjson import mJson
+from .mcsv import mCsv
+from .mgt import mGt
 import os
 
 class Filemanager(object):

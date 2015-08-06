@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from tur import Terminal_Ui_Reciever
-from template import Cli_Template
-from projects import Cli_Projects
-from files import Cli_Files
+from .tur import Terminal_Ui_Reciever
+from .template import Cli_Template
+from .projects import Cli_Projects
+from .files import Cli_Files
 
 class Cli_Main(Cli_Template):
     
@@ -22,13 +22,13 @@ class Cli_Main(Cli_Template):
         self.commands["tiedostot"] = self.files
             
     def print_settings(self):
-        print "\n == Asetukset ==> "
+        print("\n == Asetukset ==> ")
         for s in self.controller.settings.get_dictionary():
             w = " " * (30 - len(s))
-            print " > " + s + ":" + w + str(self.controller.settings.get(s))
+            print(" > " + s + ":" + w + str(self.controller.settings.get(s)))
     
     def print_messages(self):
-        print "\n == Viestit ==> "
+        print("\n == Viestit ==> ")
         self.controller.messages.ui.get('cli').print_messagelist(self.controller.messages.m)
         
     def projects(self):

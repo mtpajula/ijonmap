@@ -19,7 +19,7 @@ class mJson(object):
             project.set_dictionary(d['project'])
             
             project.messages.set_message_status(m, True)
-        except Exception, e:
+        except Exception as e:
             project.messages.set_message_status(m, False, str(e))
         
         return m
@@ -31,13 +31,13 @@ class mJson(object):
                 'settings' : settings.get_dictionary(),
                 'project' : project.get_dictionary()
                 }
-            print json.dumps(d, sort_keys=True, indent=4, separators=(',', ': '))
+            print(json.dumps(d, sort_keys=True, indent=4, separators=(',', ': ')))
             
             with open(project.filepath, 'w') as outfile:
                 json.dump(d, outfile)
             
             project.messages.set_message_status(m, True)
-        except Exception, e:
+        except Exception as e:
             project.messages.set_message_status(m, False, str(e))
         
         return m

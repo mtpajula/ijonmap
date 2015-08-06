@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from template import Cli_Template
+from .template import Cli_Template
 
 class Cli_Project(Cli_Template):
     
@@ -27,30 +27,30 @@ class Cli_Project(Cli_Template):
         self.print_element_list(self.project.polygons)
             
     def print_element_list(self, elements):
-        print ""
+        print("")
         for i, e in enumerate(elements):
-            print '[' + str(i)  + '] ' + e.get_str()
+            print('[' + str(i)  + '] ' + e.get_str())
     
     def delete_element(self):
-        print 'point, line vai polygon?'
-        t = raw_input("tyyppi: ")
+        print('point, line vai polygon?')
+        t = input("tyyppi: ")
         elements = self.project.get(t)
         if elements is False:
-            print " ! tyyppi ei ole kelvollinen, yritä uudelleen"
+            print(" ! tyyppi ei ole kelvollinen, yritä uudelleen")
             return self.new_single_point()
             
-        print ''
-        print 'valitse poistettava elementti'
+        print('')
+        print('valitse poistettava elementti')
         self.print_element_list(elements)
-        num = int(raw_input("numero: "))
+        num = int(input("numero: "))
         if self.project.is_in_range(elements, num):
             self.project.delete(elements[num])
         else:
-            print " ! numeroa " + str(num) + ' ei löydy listalta'
+            print(" ! numeroa " + str(num) + ' ei löydy listalta')
 
     def select_from_list(self, list):
         for i, item in enumerate(list):
-            print ''
+            print('')
     
     def new_point(self):
         point = self.new_single_point()
@@ -58,15 +58,15 @@ class Cli_Project(Cli_Template):
     
     def new_single_point(self):
         point = self.project.new_point()
-        point.id = raw_input(point.type + " id: ")
-        x = raw_input("x: ")
-        y = raw_input("y: ")
-        z = raw_input("z: ")
+        point.id = input(point.type + " id: ")
+        x = input("x: ")
+        y = input("y: ")
+        z = input("z: ")
         point.add_coordinates(x,y,z)
         if point.is_valid():
             return point
         else:
-            print " ! Piste ei ole kelvollinen, yritä uudelleen"
+            print(" ! Piste ei ole kelvollinen, yritä uudelleen")
             return self.new_single_point()
 
     def new_line(self):
@@ -76,11 +76,11 @@ class Cli_Project(Cli_Template):
         
     def new_multielement(self, m_element):
         
-        m_element.id = raw_input(m_element.type + " id: ")
+        m_element.id = input(m_element.type + " id: ")
         
         while (True):
             if m_element.enough_points() is True:
-                q = raw_input("Uusi piste? (k/e): ")
+                q = input("Uusi piste? (k/e): ")
             else:
                 q = "k"
             
